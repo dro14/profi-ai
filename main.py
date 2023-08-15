@@ -81,15 +81,8 @@ def start(message):
     message.reply_text(text=language_text, reply_markup=language_keyboard)
 
 
-llm = ChatOpenAI(
-    model_name="gpt-3.5-turbo",
-    temperature=0,
-)
-
-vectordb = Chroma(
-    embedding_function=OpenAIEmbeddings(),
-    persist_directory="vectordb",
-)
+llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 
 
 # Processing callbacks from the buttons
