@@ -88,7 +88,7 @@ llm = ChatOpenAI(
 
 vectordb = Chroma(
     embedding_function=OpenAIEmbeddings(),
-    persist_directory="chroma",
+    persist_directory="vectordb",
 )
 
 
