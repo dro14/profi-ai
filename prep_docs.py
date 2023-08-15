@@ -57,7 +57,7 @@ def load_csv(file):
     return CSVLoader(file).load()
 
 
-vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="chroma")
+vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 
 for category in os.listdir("../data"):
     if category.startswith("."):
