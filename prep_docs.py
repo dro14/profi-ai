@@ -45,7 +45,7 @@ def load_csv(file):
                 add = True
         if add:
             for i in range(len(row)):
-                row[i] = row[i].strip()
+                row[i] = remove_newlines(row[i].strip())
             cleaned_rows.append(row)
     f.close()
 
