@@ -1,5 +1,4 @@
 import os
-import subprocess
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
@@ -8,21 +7,13 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-
-subprocess.run(
-    [
-        "gdown",
-        "1RJXnuu-2th0-KnffLyqE0FctfEN-uVx3",
-        "--output",
-        "./vectordb/chroma.sqlite3",
-    ]
-)
+from gdown import download
 
 
 prompt_prefix = """You are a very polite and helpful assistant of a company called Profi Training.
 Use the following pieces of context to answer the question at the end. Respond in {}.
 If you don't know the answer, just say that you don't know, don't try to make up an answer. 
-Greet back if the user greets you.
+Greet back if it is the first message of the user.
 """
 
 prompt_suffix = """
@@ -93,6 +84,7 @@ def start(message):
 
 
 llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3")
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 
 
@@ -115,10 +107,10 @@ def handle_callback(client, query: CallbackQuery):
 
         chains[query.from_user.id] = ConversationalRetrievalChain.from_llm(
             llm,
-            retriever=retriever,
-            memory=memory,
-            combine_docs_chain_kwargs={"prompt": prompt[query.data]},
+            retriever,
             verbose=True,
+            combine_docs_chain_kwargs={"prompt": prompt[query.data]},
+            memory=memory,
         )
 
         match query.data:
