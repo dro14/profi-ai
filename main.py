@@ -18,15 +18,6 @@ subprocess.run(
     ]
 )
 
-output = subprocess.check_output(
-    [
-        "gdown",
-        "1RJXnuu-2th0-KnffLyqE0FctfEN-uVx3",
-        "--output",
-        "./vectordb/chroma.sqlite3",
-    ]
-)
-print(output)
 
 prompt_prefix = """You are a very polite and helpful assistant of a company called Profi Training.
 Use the following pieces of context to answer the question at the end. Respond in {}.
