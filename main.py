@@ -1,4 +1,5 @@
 import os
+import subprocess
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
@@ -7,6 +8,25 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+
+subprocess.run(
+    [
+        "gdown",
+        "1RJXnuu-2th0-KnffLyqE0FctfEN-uVx3",
+        "--output",
+        "./vectordb/chroma.sqlite3",
+    ]
+)
+
+output = subprocess.check_output(
+    [
+        "gdown",
+        "1RJXnuu-2th0-KnffLyqE0FctfEN-uVx3",
+        "--output",
+        "./vectordb/chroma.sqlite3",
+    ]
+)
+print(output)
 
 prompt_prefix = """You are a very polite and helpful assistant of a company called Profi Training.
 Use the following pieces of context to answer the question at the end. Respond in {}.
