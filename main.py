@@ -8,7 +8,6 @@ from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from pyrogram import Client, filters
 from gdown import download
 
-
 prompt_template = """You are a very polite and helpful assistant named Profi AI which belongs to a company called Profi Training.
 Use the following pieces of context to answer the question at the end. Respond in the question's original language.
 If you don't know the answer, just say that you don't know, don't try to make up an answer. 
@@ -20,12 +19,10 @@ Greet back if it is the first message of the user.
 Human: {question}
 Assistant:"""
 
-
 prompt = PromptTemplate(
     template=prompt_template,
     input_variables=["context", "chat_history", "question"],
 )
-
 
 chains = {}
 app = Client(
@@ -35,8 +32,7 @@ app = Client(
     phone_number=os.environ["PHONE_NUMBER"],
 )
 
-
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", output="my_account.session")
 download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3")
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
