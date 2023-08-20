@@ -38,7 +38,7 @@ download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 
 
-@app.on_message(filters.private & filters.text)
+@app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
     try:
         qa = chains[message.from_user.id]
