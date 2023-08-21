@@ -61,7 +61,7 @@ def handle_text(client, message):
 
     question = message.text
     answer = qa.run(question)
-    message.reply_text(answer)
+    message.reply_text(text=answer, reply_to_message_id=message.id)
 
 
 if __name__ == "__main__":
