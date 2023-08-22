@@ -8,6 +8,11 @@ from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from pyrogram import Client, filters
 from gdown import download
 
+allowed_users = [
+    5582454518,
+    1331278972,
+]
+
 prompt_template = """You are a very polite and helpful assistant named Profi AI which belongs to a company called Profi Training.
 Use the following pieces of context to answer the question at the end. Respond in the question's original language.
 If you don't know the answer, just say that you don't know, don't try to make up an answer. 
@@ -38,7 +43,9 @@ download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 
 
-@app.on_message(filters.private & filters.text & filters.incoming & filters.user(5582454518))
+@app.on_message(
+    filters.private & filters.text & filters.incoming & filters.user(allowed_users)
+)
 def handle_text(client, message):
     try:
         qa = chains[message.from_user.id]
