@@ -11,6 +11,15 @@ from gdown import download
 allowed_users = [
     5582454518,
     1331278972,
+    49698050,
+    616231064,
+    229142482,
+    1175641280,
+    3167087,
+    653012968,
+    85696477,
+    2780467,
+    786096786,
 ]
 
 prompt_template = """You are a very polite and helpful assistant named Profi AI which belongs to a company called Profi Training.
