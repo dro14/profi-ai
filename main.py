@@ -50,6 +50,7 @@ llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", output="my_account.session")
 download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3")
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
+retriever = vectordb.as_retriever(search_kwargs={"k": 5})
 
 
 @app.on_message(
@@ -59,7 +60,6 @@ def handle_text(client, message):
     try:
         qa = chains[message.from_user.id]
     except KeyError:
-        retriever = vectordb.as_retriever(search_kwargs={"k": 5})
         memory = ConversationBufferWindowMemory(
             k=2,
             memory_key="chat_history",
