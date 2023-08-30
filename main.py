@@ -20,6 +20,7 @@ allowed_users = [
     85696477,
     2780467,
     786096786,
+    657149280,
 ]
 
 prompt_template = """You are a very polite and helpful assistant named Profi AI which belongs to a company called Profi Training.
