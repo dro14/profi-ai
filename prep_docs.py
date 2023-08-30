@@ -77,5 +77,6 @@ for category in os.listdir("../data"):
             docs[i].metadata["category"] = category
         vectordb.add_documents(docs)
         time.sleep(10)
+        print(file_name)
 
 vectordb.persist()

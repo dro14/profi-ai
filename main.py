@@ -6,7 +6,7 @@ from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from pyrogram import Client, filters
-from gdown import download
+from gdown import download, download_folder
 
 allowed_users = [
     5582454518,
@@ -47,11 +47,11 @@ app = Client(
     phone_number=os.environ["PHONE_NUMBER"],
 )
 
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", output="my_account.session")
-download(id="1wMzN9Wygpo8Ml3EhnWjPa3bbOWlE6LM5", output="vectordb/chroma.sqlite3")
+llm = ChatOpenAI(model_name="gpt-4", temperature=0)
+download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv")
+download_folder(id="1FYaUhsRc5Ck8RHO1DRxKSd4aJn1qFOKA")
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
-retriever = vectordb.as_retriever(search_kwargs={"k": 5})
+retriever = vectordb.as_retriever(search_kwargs={"k": 4})
 
 
 @app.on_message(
