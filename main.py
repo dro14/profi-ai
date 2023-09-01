@@ -5,6 +5,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chains.conversational_retrieval.prompts import PromptTemplate
+from langchain.callbacks import get_openai_callback
 from pyrogram import Client, filters
 from gdown import download, download_folder
 
@@ -76,9 +77,11 @@ def handle_text(client, message):
         )
         chains[message.from_user.id] = qa
 
-    question = message.text
-    answer = qa.run(question)
-    message.reply_text(text=answer, reply_to_message_id=message.id)
+    with get_openai_callback() as cb:
+        question = message.text
+        answer = qa.run(question)
+        message.reply_text(text=answer, reply_to_message_id=message.id)
+        print(cb)
 
 
 if __name__ == "__main__":
