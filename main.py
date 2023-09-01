@@ -90,7 +90,7 @@ def handle_text(client, message):
         message.reply_text(text=answer, reply_to_message_id=message.id)
         usage = redis.get("Profi_usage")
         if usage:
-            usage = int(f"{usage}")
+            usage = int(f"{usage}"[2:-1])
             redis.set("Profi_usage", usage + cb.total_cost)
         else:
             redis.set("Profi_usage", cb.total_cost)
