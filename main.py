@@ -8,6 +8,7 @@ from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from langchain.callbacks import get_openai_callback
 from pyrogram import Client, filters
 from gdown import download, download_folder
+from redis import Redis
 
 allowed_users = [
     5582454518,
@@ -48,6 +49,12 @@ app = Client(
     phone_number=os.environ["PHONE_NUMBER"],
 )
 
+redis = Redis(
+    host=os.environ["REDIS_HOST"],
+    port=os.environ["REDIS_PORT"],
+    password=os.environ["REDIS_PASSWORD"],
+)
+
 llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", quiet=True)
 download_folder(id="1FYaUhsRc5Ck8RHO1DRxKSd4aJn1qFOKA", quiet=True)
@@ -81,7 +88,11 @@ def handle_text(client, message):
         question = message.text
         answer = qa.run(question)
         message.reply_text(text=answer, reply_to_message_id=message.id)
-        print(cb)
+        usage = redis.get("Profi_usage")
+        if usage:
+            redis.set("Profi_usage", int(usage) + cb.total_cost)
+        else:
+            redis.set("Profi_usage", cb.total_cost)
 
 
 if __name__ == "__main__":
