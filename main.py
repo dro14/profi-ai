@@ -62,10 +62,13 @@ vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vect
 retriever = vectordb.as_retriever(search_kwargs={"k": 3})
 
 
-@app.on_message(
-    filters.private & filters.text & filters.incoming & filters.user(allowed_users)
-)
+@app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
+    if message.from_user.id not in allowed_users:
+        message.text = message.from_user.username + "\n" + message.text
+        message.forward(chat_id=-870308252)
+        return
+
     try:
         qa = chains[message.from_user.id]
     except KeyError:
@@ -89,10 +92,8 @@ def handle_text(client, message):
         answer = qa.run(question)
         message.reply_text(text=answer, reply_to_message_id=message.id)
         usage = redis.get("Profi_usage")
-        if usage:
-            redis.set("Profi_usage", float(usage) + cb.total_cost)
-        else:
-            redis.set("Profi_usage", cb.total_cost)
+        usage = float(usage) + cb.total_cost if usage else cb.total_cost
+        redis.set("Profi_usage", usage)
 
 
 if __name__ == "__main__":
