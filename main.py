@@ -66,8 +66,8 @@ retriever = vectordb.as_retriever(search_kwargs={"k": 3})
 def handle_text(client, message):
     if message.from_user.id not in allowed_users:
         text = f"""Юзернейм: {message.from_user.username}
-        Номер телефона: {message.from_user.phone_number}
-        Сообщение: {message.text}"""
+Номер телефона: @{message.from_user.phone_number}
+Сообщение: {message.text}"""
         client.send_message(chat_id=-870308252, text=text)
         return
 
