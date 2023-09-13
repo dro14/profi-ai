@@ -65,9 +65,16 @@ retriever = vectordb.as_retriever(search_kwargs={"k": 3})
 @app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
     if message.from_user.id not in allowed_users:
-        text = f"""Юзернейм: {message.from_user.username}
-Номер телефона: @{message.from_user.phone_number}
-Сообщение: {message.text}"""
+        username = (
+            "@" + message.from_user.username if message.from_user.username else "отсутствует"
+        )
+        phone_number = (
+            message.from_user.phone_number if message.from_user.phone_number else "скрыт"
+        )
+        text = f"""Юзернейм: {username}
+Номер телефона: {phone_number}
+Сообщение:
+{message.text}"""
         client.send_message(chat_id=-870308252, text=text)
         return
 
