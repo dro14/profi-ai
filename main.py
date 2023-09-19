@@ -42,7 +42,7 @@ redis = Redis(
 
 llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", quiet=True)
-download_folder(id="1FYaUhsRc5Ck8RHO1DRxKSd4aJn1qFOKA", quiet=True)
+download_folder(id="1c4nDJXXffGVoSRxT7_F_n5J_IDdan1SF", quiet=True)
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
 retriever = vectordb.as_retriever(search_kwargs={"k": 5})
 
