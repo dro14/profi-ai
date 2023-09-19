@@ -4,11 +4,11 @@ from langchain.vectorstores import Chroma
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
-from langchain.chains.conversational_retrieval.prompts import PromptTemplate
 from langchain.callbacks import get_openai_callback
 from pyrogram import Client, filters
 from gdown import download, download_folder
 from redis import Redis
+from prompt import prompt
 
 allowed_users = [
     5582454518,
@@ -25,21 +25,6 @@ allowed_users = [
     657149280,
 ]
 
-prompt_template = """You are a very polite and helpful assistant named Аймышь which belongs to a company called Profi Training.
-Use the following pieces of context to answer the question at the end. Respond in the question's original language, which can be either Russian or Uzbek.
-If you don't know the answer, just say that you don't know, don't try to make up an answer. 
-Greet back if it is the first message of the user.
-
-{context}
-
-{chat_history}
-Human: {question}
-Assistant:"""
-
-prompt = PromptTemplate(
-    template=prompt_template,
-    input_variables=["context", "chat_history", "question"],
-)
 
 chains = {}
 app = Client(
@@ -59,17 +44,21 @@ llm = ChatOpenAI(model_name="gpt-4", temperature=0)
 download(id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv", quiet=True)
 download_folder(id="1FYaUhsRc5Ck8RHO1DRxKSd4aJn1qFOKA", quiet=True)
 vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory="vectordb")
-retriever = vectordb.as_retriever(search_kwargs={"k": 3})
+retriever = vectordb.as_retriever(search_kwargs={"k": 5})
 
 
 @app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
     if message.from_user.id not in allowed_users:
         username = (
-            "@" + message.from_user.username if message.from_user.username else "отсутствует"
+            "@" + message.from_user.username
+            if message.from_user.username
+            else "отсутствует"
         )
         phone_number = (
-            message.from_user.phone_number if message.from_user.phone_number else "скрыт"
+            message.from_user.phone_number
+            if message.from_user.phone_number
+            else "скрыт"
         )
         text = f"""Юзернейм: {username}
 Номер телефона: {phone_number}
