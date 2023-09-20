@@ -3,12 +3,19 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chat_models import ChatOpenAI
 from langchain.vectorstores import Chroma
-from gdown import download_folder
+from gdown import download
 from prompt import prompt
 
 
-download_folder(
-    id="1BTGO36lB-aSJRk-Ei9dAilXcJGlBIQm0",
+download(
+    id="1hXtoJElelNraRXbH_hKVDwymH1xD87VX",
+    output="vectordb/dbd9c861-7cb7-485f-9698-89f8ea05acf6/data_level0.bin",
+    quiet=True,
+)
+
+download(
+    id="1TjiKB-t2SdrFvyBYwRIcHuIHVzaWoOpY",
+    output="vectordb/chroma.sqlite3",
     quiet=True,
 )
 
@@ -41,4 +48,3 @@ def qa_chain():
         combine_docs_chain_kwargs={"prompt": prompt},
         memory=memory,
     )
-

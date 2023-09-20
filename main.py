@@ -25,6 +25,7 @@ allowed_users = [
 
 download(
     id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv",
+    output="my_account.session",
     quiet=True,
 )
 
