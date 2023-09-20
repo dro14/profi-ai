@@ -1,5 +1,3 @@
-import time
-
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -7,7 +5,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.vectorstores import Chroma
 from gdown import download
 from prompt import prompt
-from time import sleep
+import time
 
 
 download(
@@ -16,7 +14,7 @@ download(
     quiet=True,
 )
 
-time.sleep(10)
+time.sleep(5)
 
 download(
     id="1JJXubJkHMyDyZSj9FPkLQTnxJPl6MLAd",
