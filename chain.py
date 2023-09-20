@@ -8,13 +8,13 @@ from prompt import prompt
 
 
 download(
-    id="1hXtoJElelNraRXbH_hKVDwymH1xD87VX",
+    id="1O1emN8RMJ9CtYur0LwmuaGwGFQZ_Q55s",
     output="vectordb/dbd9c861-7cb7-485f-9698-89f8ea05acf6/data_level0.bin",
     quiet=True,
 )
 
 download(
-    id="1TjiKB-t2SdrFvyBYwRIcHuIHVzaWoOpY",
+    id="1JJXubJkHMyDyZSj9FPkLQTnxJPl6MLAd",
     output="vectordb/chroma.sqlite3",
     quiet=True,
 )

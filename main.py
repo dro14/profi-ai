@@ -2,7 +2,6 @@ from langchain.callbacks import get_openai_callback
 from helpers import format_message_to_forward
 from redis_functions import save_usage
 from pyrogram import Client, filters
-from gdown import download
 from chain import qa_chain
 import os
 
@@ -22,12 +21,6 @@ allowed_users = [
     657149280,
 ]
 
-
-download(
-    id="1h2Txpgp4bL6BEAV59Ch2lbJzjIlz0cPv",
-    output="my_account.session",
-    quiet=True,
-)
 
 app = Client(
     "my_account",
