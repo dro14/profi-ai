@@ -34,8 +34,9 @@ chains = {}
 
 @app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
+
     if message.from_user.id == 5582454518:
-        user_id = user_id_from_message(message)
+        message, user_id = user_id_from_message(message)
         if not user_id:
             message.reply_text("Пожалуйста предоставьте свой адрес электронной почты")
             return

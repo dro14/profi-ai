@@ -28,7 +28,7 @@ vectordb = Chroma(
 )
 
 retriever = vectordb.as_retriever(
-    search_kwargs={"k": 5},
+    search_kwargs={"k": 3},
 )
 
 llm = ChatOpenAI(
