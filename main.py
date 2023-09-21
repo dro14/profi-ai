@@ -1,5 +1,5 @@
+from helpers import format_message_to_forward, user_id_from_message
 from langchain.callbacks import get_openai_callback
-from helpers import format_message_to_forward
 from redis_functions import save_usage
 from pyrogram import Client, filters
 from users import update_users
@@ -8,7 +8,6 @@ import os
 
 
 allowed_users = [
-    5582454518,
     1331278972,
     49698050,
     616231064,
@@ -35,20 +34,28 @@ chains = {}
 
 @app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
-    if message.from_user.id in allowed_users:
-        try:
-            qa = chains[message.from_user.id]
-        except KeyError:
-            qa = qa_chain()
-            chains[message.from_user.id] = qa
-
-        with get_openai_callback() as cb:
-            answer = qa.run(message.text)
-            message.reply_text(text=answer, reply_to_message_id=message.id)
-            save_usage(cb)
+    if message.from_user.id == 5582454518:
+        user_id = user_id_from_message(message)
+        if not user_id:
+            message.reply_text("Пожалуйста предоставьте свой адрес электронной почты")
+            return
+    elif message.from_user.id in allowed_users:
+        user_id = message.from_user.id
     else:
         text = format_message_to_forward(message)
         client.send_message(chat_id=-870308252, text=text)
+        return
+
+    try:
+        qa = chains[user_id]
+    except KeyError:
+        qa = qa_chain()
+        chains[user_id] = qa
+
+    with get_openai_callback() as cb:
+        answer = qa.run(message.text)
+        message.reply_text(text=answer, reply_to_message_id=message.id)
+        save_usage(cb)
 
 
 async def main():

@@ -20,6 +20,7 @@ async def update_users():
         while True:
             response = requests.get(exports_url).json()
             if response["success"]:
+                users.clear()
                 for item in response["info"]["items"]:
                     key = f"{item[5]} {item[6]}".strip()
                     try:
@@ -30,5 +31,4 @@ async def update_users():
             else:
                 await asyncio.sleep(10)
 
-        print("number of unique names:", len(users))
         await asyncio.sleep(10 * 60)

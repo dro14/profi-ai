@@ -12,8 +12,7 @@ prompt_template = """\
 
 {chat_history}
 Human: {question}
-Assistant:\
-"""
+Assistant:"""
 
 prompt = PromptTemplate(
     template=prompt_template,
