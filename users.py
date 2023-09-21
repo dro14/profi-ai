@@ -1,6 +1,5 @@
 import requests
 import asyncio
-import time
 import os
 
 
@@ -14,13 +13,9 @@ users = {}
 
 async def update_users():
     while True:
-        try:
-            response = requests.get(USERS_URL).json()
-            export_id = response["info"]["export_id"]
-            exports_url = EXPORTS_URL.format(export_id)
-        except:
-            time.sleep(10)
-            continue
+        response = requests.get(USERS_URL).json()
+        export_id = response["info"]["export_id"]
+        exports_url = EXPORTS_URL.format(export_id)
 
         while True:
             response = requests.get(exports_url).json()
@@ -33,11 +28,7 @@ async def update_users():
                         users[key] = [{"id": item[0], "email": item[1]}]
                 break
             else:
-                print(response)
-                time.sleep(10)
+                await asyncio.sleep(10)
 
-
-asyncio.run(update_users())
-
-for key, value in users.items():
-    print(key, value)
+        print("number of unique names:", len(users))
+        await asyncio.sleep(10 * 60)

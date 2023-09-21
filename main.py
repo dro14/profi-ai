@@ -2,6 +2,7 @@ from langchain.callbacks import get_openai_callback
 from helpers import format_message_to_forward
 from redis_functions import save_usage
 from pyrogram import Client, filters
+from users import update_users
 from chain import qa_chain
 import os
 
@@ -50,6 +51,11 @@ def handle_text(client, message):
         client.send_message(chat_id=-870308252, text=text)
 
 
+async def main():
+    async with app:
+        await update_users()
+
+
 if __name__ == "__main__":
     print("The bot is up and running!")
-    app.run()
+    app.run(main())
