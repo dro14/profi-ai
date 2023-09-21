@@ -14,7 +14,7 @@ download(
     quiet=True,
 )
 
-time.sleep(5)
+time.sleep(10)
 
 download(
     id="1JJXubJkHMyDyZSj9FPkLQTnxJPl6MLAd",

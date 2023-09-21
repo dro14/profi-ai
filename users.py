@@ -12,8 +12,14 @@ users = {}
 
 
 async def update_users():
+    retry_delay = 10
     while True:
         response = requests.get(USERS_URL).json()
+        if not response["success"]:
+            print(response)
+            await asyncio.sleep(retry_delay)
+            retry_delay *= 2
+            continue
         export_id = response["info"]["export_id"]
         exports_url = EXPORTS_URL.format(export_id)
 
