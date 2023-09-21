@@ -34,7 +34,6 @@ chains = {}
 
 @app.on_message(filters.private & filters.text & filters.incoming)
 def handle_text(client, message):
-
     if message.from_user.id == 5582454518:
         message, user_id = user_id_from_message(message)
         if not user_id:

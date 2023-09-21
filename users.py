@@ -31,4 +31,4 @@ async def update_users():
             else:
                 await asyncio.sleep(10)
 
-        await asyncio.sleep(10 * 60)
+        await asyncio.sleep(1200)
