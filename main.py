@@ -37,7 +37,10 @@ def handle_text(client, message):
     if message.from_user.id == 5582454518:
         message, user_id = user_id_from_message(message)
         if not user_id:
-            message.reply_text("Пожалуйста предоставьте свой адрес электронной почты")
+            message.reply_text(
+                text="Пожалуйста предоставьте свой адрес электронной почты",
+                reply_to_message_id=message.id,
+            )
             return
     elif message.from_user.id in allowed_users:
         user_id = message.from_user.id
@@ -54,8 +57,12 @@ def handle_text(client, message):
 
     with get_openai_callback() as cb:
         answer = qa.run(message.text)
-        message.reply_text(str(answer))
         save_usage(cb)
+
+    message.reply_text(
+        text=answer,
+        reply_to_message_id=message.id,
+    )
 
 
 async def main():
