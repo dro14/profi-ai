@@ -54,7 +54,7 @@ def handle_text(client, message):
 
     with get_openai_callback() as cb:
         answer = qa.run(message.text)
-        message.reply_text(text=answer, reply_to_message_id=message.id)
+        message.reply_text(text=answer)
         save_usage(cb)
 
 
